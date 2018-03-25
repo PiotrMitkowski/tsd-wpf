@@ -70,6 +70,7 @@
     <Compile Include="BookForm.xaml.cs">
       <DependentUpon>BookForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BookFormatConverter.cs" />
     <Compile Include="Books.cs" />
     <Compile Include="ColorConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">

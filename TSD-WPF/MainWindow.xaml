@@ -8,23 +8,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000" Loaded="Window_Loaded">
     <Window.Resources>
-        <DataTemplate x:Key="BooksListItem">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Id}" TextWrapping="Wrap" Margin="10,5"/>
-                <TextBlock Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="10,5"/>
-                <TextBlock Grid.Column="2" Text="{Binding IsRead}" TextWrapping="Wrap" Margin="10,5"/>
-            </Grid>
-        </DataTemplate>
         <root:MyColorConverter x:Key="colorConverter"/>
         <root:MathRoundConverter x:Key="MathRoundConverter"/>
-        <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="{Binding GreenValue, Converter={StaticResource colorConverter}}"/>
+        <root:BookFormatConverter x:Key="BookFormatConverter" />
+        <Style x:Key="UnreadStyle" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsRead}" Value="False">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+            
         </Style>
+        <DataTemplate x:Key="BooksListItem">
+            <Grid Background="{Binding Path=Format, Converter={StaticResource BookFormatConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Id}" TextWrapping="Wrap" Margin="10,5"  Style="{StaticResource ResourceKey=UnreadStyle}"/>
+                <TextBlock Grid.Column="1" Text="{Binding Title}" TextWrapping="Wrap" Margin="10,5"  Style="{StaticResource ResourceKey=UnreadStyle}"/>
+                <TextBlock Grid.Column="2" Text="{Binding IsRead}" TextWrapping="Wrap" Margin="10,5"  Style="{StaticResource ResourceKey=UnreadStyle}"/>
+            </Grid>
+        </DataTemplate>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -57,7 +64,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" x:Name="BooksListBox" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" ItemTemplate="{StaticResource BooksListItem}"/>
+                <ListBox Grid.Row="0" x:Name="BooksListBox" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" ItemTemplate="{StaticResource BooksListItem}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                 <Button Grid.Row="1" Margin="0,10" Content="Add" Click="Button_Click" />
             </Grid>
             
@@ -74,7 +81,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Adjust the darkness:"/>
-                <Slider x:Name="ColorSlider" Grid.Row="1" Maximum="255" SmallChange="1" TickPlacement="Both"  Value="{Binding ElementName=GreenValueBox, Path=Text, Mode=TwoWay}"/>
+                <Slider x:Name="ColorSlider" Grid.Row="1" Maximum="255" SmallChange="1" TickPlacement="Both"  Value="{Binding ElementName=GreenValueBox, Path=Text, Mode=TwoWay, FallbackValue=100}"/>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
