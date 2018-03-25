@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="TSD_WPF.BookForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TSD_WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="UserControl_DataContextChanged">
+    <Grid Background="White" Margin="20,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="ID" Grid.Row="0" Grid.Column="0" Margin="5,10"/>
+        <TextBlock Text="{Binding Id}" Grid.Row="0" Grid.Column="1" Margin="5,10"/>
+        <TextBlock Text="Title" Grid.Row="1" Grid.Column="0" Margin="5,10"/>
+        <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5,10"/>
+        <TextBlock Text="Author" Grid.Row="2" Grid.Column="0" Margin="5,10"/>
+        <TextBox Text="{Binding Author, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="5,10"/>
+        <TextBlock Text="Year" Grid.Row="3" Grid.Column="0" Margin="5,10"/>
+        <TextBox Text="{Binding Year, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="5,10"/>
+        <CheckBox Grid.Row="4" Grid.Column="1" Content="isRead" IsChecked="{Binding Path=IsRead, Mode=TwoWay, UpdateSourceTrigger=Default}" Margin="5,10"/>
+        <TextBlock Text="Format" Grid.Row="5" Grid.Column="0" Margin="5,10"/>
+        <ComboBox x:Name="typeSelect" Grid.Row="5" Grid.Column="1" Margin="5,10"/>
+        <Button Content="Remove" Grid.Row="6" Grid.Column="1" Margin="5,10" Click="Button_Click" />
+    </Grid>
+</UserControl>
